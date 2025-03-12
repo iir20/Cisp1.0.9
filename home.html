@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>COSMIC SPACE PROTOCOL</title>
+    <link rel="stylesheet" href="styles-home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="Cosmic Space Protocol - A futuristic Web3 platform for cosmic exploration">
+    
+    <style>
+        /* Mobile-first responsive design */
+        :root {
+            --header-height: 60px;
+            --card-gap: 1rem;
+            --container-padding: 1rem;
+            --modal-width: min(90vw, 800px);
+            --border-radius: 12px;
+            --button-height: 44px; /* Minimum touch target size */
+        }
+
+        body {
+            -webkit-tap-highlight-color: transparent;
+            overscroll-behavior: none;
+        }
+
+        .main-container {
+            padding: var(--container-padding);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cosmic-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: rgba(26, 26, 46, 0.8);
+            padding: 1rem;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-container h1 {
+            font-size: clamp(1rem, 4vw, 1.5rem);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: var(--card-gap);
+            padding: 1rem 0;
+        }
+
+        .feature-card {
+            min-height: 200px;
+            touch-action: manipulation;
+            transition: transform 0.2s ease;
+        }
+
+        .feature-card:active {
+            transform: scale(0.98);
+        }
+
+        /* Enhanced Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            width: var(--modal-width);
+            max-height: 90vh;
+            background: var(--background, #1a1a2e);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            position: relative;
+            overflow-y: auto;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Form Controls */
+        input, button, select {
+            height: var(--button-height);
+            border-radius: 8px;
+            font-size: 16px; /* Prevent iOS zoom */
+        }
+
+        button {
+            padding: 0 1.5rem;
+            min-width: 44px;
+            touch-action: manipulation;
+        }
+
+        /* Wallet Display */
+        .wallet-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            max-width: 200px;
+            overflow: hidden;
+        }
+
+        #wallet-address {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .header-controls {
+                flex: 1;
+                justify-content: flex-end;
+                margin-left: 1rem;
+            }
+
+            .wallet-info {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .modal-content {
+                width: 100%;
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .mining-dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-row {
+                flex-direction: column;
+            }
+
+            .stat-item {
+                margin-bottom: 0.5rem;
+            }
+
+            .code-container {
+                flex-direction: column;
+            }
+
+            .copy-button {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+
+            .table-container {
+                margin: 0 -1rem;
+                padding: 0 1rem;
+                width: calc(100% + 2rem);
+            }
+
+            .welcome-section {
+                padding: 1rem;
+            }
+
+            .cosmic-header {
+                padding: 0.5rem 1rem;
+            }
+
+            .wallet-connect {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Tablet Optimizations */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) {
+            .feature-card:hover {
+                transform: none;
+            }
+
+            .copy-button:hover {
+                transform: none;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #ffffff;
+                --text-secondary: #a0a0a0;
+                --background: #1a1a2e;
+                --card-background: rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            margin: -12px 0 0 -12px;
+            border: 2px solid transparent;
+            border-top-color: var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Smooth Scrolling */
+        .modal-content {
+            scroll-behavior: smooth;
+        }
+
+        /* Better Touch Feedback */
+        .feature-card, button {
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        /* Prevent Text Selection */
+        .feature-title, .stat-label, .stat-value {
+            user-select: none;
+        }
+
+        /* Fix Feature Cards */
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--accent-color, #7f00ff);
+            margin-bottom: 1rem;
+        }
+
+        .feature-content {
+            flex: 1;
+        }
+
+        .feature-action {
+            color: var(--accent-color, #7f00ff);
+            font-weight: 500;
+        }
+
+        /* Fix Welcome Section */
+        .welcome-section {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, rgba(127, 0, 255, 0.1), rgba(225, 0, 255, 0.1));
+            border-radius: var(--border-radius);
+        }
+
+        .welcome-section h2 {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #7f00ff, #e100ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Fix Wallet Button */
+        .wallet-connect {
+            background: linear-gradient(135deg, #7f00ff, #e100ff);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .wallet-connect:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(127, 0, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header class="cosmic-header">
+            <div class="logo-container">
+                <i class="fas fa-galaxy"></i>
+                <h1>COSMIC SPACE PROTOCOL</h1>
+            </div>
+            <div class="header-controls">
+                <div class="wallet-info" id="wallet-info" style="display: none;">
+                    <span id="wallet-balance">0 xCIS</span>
+                    <span id="wallet-address"></span>
+                </div>
+                <button class="wallet-connect" onclick="connectWallet()">
+                    <i class="fas fa-wallet"></i> Connect Wallet
+                </button>
+            </div>
+        </header>
+
+        <div class="welcome-section">
+            <h2>Welcome to the Cosmic Space</h2>
+            <p>Explore the future of decentralized cosmic mining and NFT collection</p>
+        </div>
+
+        <div class="features-grid">
+            <!-- Mining Section -->
+            <div class="feature-card" onclick="showMiningSection()">
+                <div class="feature-icon">
+                    <i class="fas fa-hammer"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Mining Hub</h3>
+                    <p>Mine xCIS tokens and earn rewards</p>
+                    <span class="feature-action">Start Mining →</span>
+                </div>
+            </div>
+
+            <!-- NFT Section -->
+            <div class="feature-card" onclick="window.location.href='nft.html'">
+                <div class="feature-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>NFT Collection</h3>
+                    <p>Explore and manage your NFTs</p>
+                    <span class="feature-action">View Collection →</span>
+                </div>
+            </div>
+
+            <!-- Staking Section -->
+            <div class="feature-card" onclick="window.location.href='staking.html'">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Staking</h3>
+                    <p>Stake your tokens for rewards</p>
+                    <span class="feature-action">Start Staking →</span>
+                </div>
+            </div>
+
+            <!-- Token Transfer Section -->
+            <div class="feature-card" onclick="showTransferModal()">
+                <div class="feature-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Token Transfer</h3>
+                    <p>Send and receive tokens</p>
+                    <span class="feature-action">Transfer Now →</span>
+                </div>
+            </div>
+
+            <!-- Referral Program Section -->
+            <div class="feature-card referral-card" onclick="showReferralModal()">
+                <i class="fas fa-users feature-icon"></i>
+                <h3 class="feature-title">Referral Program</h3>
+                <p class="feature-description">Invite friends and earn rewards. Level up your cosmic influence!</p>
+            </div>
+
+            <!-- Convert Section -->
+            <div class="feature-card" onclick="window.location.href='CONVERT.html'">
+                <div class="feature-icon">
+                    <i class="fas fa-sync"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Convert</h3>
+                    <p>Convert between xCIS and CIS</p>
+                    <span class="feature-action">Convert Now →</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mining Section Modal -->
+        <div id="miningModal" class="modal">
+            <div class="modal-content mining-content">
+                <span class="close-modal" onclick="closeModal('miningModal')">&times;</span>
+                <div class="mining-container">
+                    <div class="mining-header">
+                        <h2 class="mining-title"><i class="fas fa-hammer"></i> Mining Hub</h2>
+                        <div id="mining-status" class="status inactive">Mining Stopped</div>
+                    </div>
+
+                    <div class="mining-dashboard">
+                        <!-- Mining Status Card -->
+                        <div class="mining-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Mining Status</h3>
+                            </div>
+                            <div class="mining-stats">
+                                <div class="stat-item">
+                                    <div class="stat-label">Hashrate</div>
+                                    <div class="stat-value" id="hashrate">0 H/s</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">Mining Power</div>
+                                    <div class="stat-value" id="mining-power">1.0x</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">Session Reward</div>
+                                    <div class="stat-value" id="session-reward">0.00 xCIS</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">Total Mined</div>
+                                    <div class="stat-value" id="total-mined">0.00 xCIS</div>
+                                </div>
+                            </div>
+                            <div id="mining-animation" class="mining-animation"></div>
+                            <div class="mining-controls">
+                                <button id="start-mining" class="btn btn-primary">
+                                    <i class="fas fa-play"></i> Start Mining
+                                </button>
+                                <button id="stop-mining" class="btn btn-secondary" disabled>
+                                    <i class="fas fa-stop"></i> Stop Mining
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Mining Performance Card -->
+                        <div class="mining-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Performance</h3>
+                            </div>
+                            <div class="mining-stats">
+                                <div class="stat-item">
+                                    <div class="stat-label">Blocks Found</div>
+                                    <div class="stat-value" id="blocks-found">0</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">Difficulty</div>
+                                    <div class="stat-value" id="difficulty">2.0</div>
+                                </div>
+                            </div>
+                            <div class="mining-controls">
+                                <button id="upgrade-mining" class="btn btn-primary">
+                                    <i class="fas fa-arrow-up"></i> Upgrade Mining Power
+                                    <span id="upgrade-cost">1000 xCIS</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transfer Modal -->
+        <div id="transferModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('transferModal')">&times;</span>
+                <h2>Transfer Tokens</h2>
+                <div class="transfer-form">
+                    <select id="tokenType">
+                        <option value="xCIS">xCIS</option>
+                        <option value="CIS">CIS</option>
+                    </select>
+                    <input type="text" id="recipientAddress" placeholder="Recipient Address">
+                    <input type="number" id="transferAmount" placeholder="Amount">
+                    <button onclick="sendTokens()">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Referral Program Modal -->
+        <div id="referralModal" class="modal">
+            <div class="modal-content referral-modal">
+                <span class="close-modal" onclick="closeModal('referralModal')">&times;</span>
+                <h2 class="modal-title">Cosmic Referral Program</h2>
+                
+                <div class="referral-stats">
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <span class="stat-label">Your Level</span>
+                            <span class="stat-value" id="referralLevel">-</span>
+                            <span class="stat-title" id="levelTitle">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Total Referrals</span>
+                            <span class="stat-value" id="totalReferrals">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Total Rewards</span>
+                            <span class="stat-value" id="totalRewards">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="referral-progress">
+                    <h3>Next Level Progress</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="levelProgress"></div>
+                    </div>
+                    <p class="progress-text" id="progressText">-</p>
+                </div>
+
+                <div class="referral-code-section">
+                    <h3>Your Referral Code</h3>
+                    <div class="code-container">
+                        <input type="text" id="referralCode" readonly>
+                        <button onclick="copyReferralCode()" class="copy-button">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                </div>
+
+                <div class="rewards-table">
+                    <h3>Level Rewards</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Level</th>
+                                    <th>Required</th>
+                                    <th>Rewards</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rewardsTableBody">
+                                <!-- Filled dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="notifications.js"></script>
+    <script src="blockchain.js"></script>
+    <script src="cisp-wallet.js"></script>
+    <script src="cosmic-effects.js"></script>
+    <script src="referral-system.js"></script>
+    <script src="mining.js"></script>
+    <script src="enhanced-cosmic-effects.js"></script>
+    <script src="improved-wallet-sync.js"></script>
+    <script src="global-coordination.js"></script>
+
+    <script>
+        // Initialize systems when page loads
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // Initialize notification system first
+                if (window.notifications) {
+                    await window.notifications.init();
+                }
+
+                // Initialize blockchain
+                if (window.cispChain) {
+                    await window.cispChain.init();
+                }
+
+                // Initialize referral system
+                if (window.referralSystem) {
+                    await window.referralSystem.init();
+                }
+
+                // Check if wallet is already connected
+                if (window.cispWallet?.getCurrentWallet()) {
+                    updateWalletDisplay();
+                    updateReferralStats();
+                }
+
+            } catch (error) {
+                console.error('Error initializing systems:', error);
+                window.notifications?.show('Error initializing systems', 'error');
+            }
+        });
+
+        // Update wallet display function
+        function updateWalletDisplay() {
+            const wallet = window.cispWallet.getCurrentWallet();
+            if (wallet) {
+                document.getElementById('wallet-info').style.display = 'flex';
+                document.getElementById('wallet-address').textContent = 
+                    `${wallet.address.substring(0, 6)}...${wallet.address.substring(wallet.address.length - 4)}`;
+                document.getElementById('wallet-balance').textContent = `${wallet.balance.toFixed(2)} xCIS`;
+                document.querySelector('.wallet-connect').style.display = 'none';
+            }
+        }
+
+        // Enhanced wallet connection
+        async function connectWallet() {
+            if (!navigator.onLine) {
+                window.notifications?.show('No internet connection', 'error');
+                return;
+            }
+            
+            const connectButton = document.querySelector('.wallet-connect');
+            if (connectButton.classList.contains('loading')) return;
+            
+            connectButton.classList.add('loading');
+            try {
+                await window.cispWallet.connectWallet();
+                const wallet = window.cispWallet.getCurrentWallet();
+                if (wallet) {
+                    updateWalletDisplay();
+                    await updateReferralStats();
+                    window.notifications?.show('Wallet connected successfully', 'success');
+                }
+            } catch (error) {
+                console.error('Error connecting wallet:', error);
+                window.notifications?.show(
+                    error.message || 'Failed to connect wallet',
+                    'error'
+                );
+            } finally {
+                connectButton.classList.remove('loading');
+            }
+        }
+
+        // Enhanced referral modal display
+        function showReferralModal() {
+            if (!window.cispWallet?.getCurrentWallet()) {
+                window.notifications?.show('Please connect your wallet first', 'warning');
+                return;
+            }
+            showModal('referralModal');
+            updateReferralStats();
+        }
+
+        // Enhanced referral stats update
+        async function updateReferralStats() {
+            const currentWallet = window.cispWallet?.getCurrentWallet();
+            if (!currentWallet) return;
+
+            try {
+                const stats = window.referralSystem.getReferralStats(currentWallet.address);
+                
+                // Update stats with error checking
+                const levelElement = document.getElementById('referralLevel');
+                const titleElement = document.getElementById('levelTitle');
+                const referralsElement = document.getElementById('totalReferrals');
+                const rewardsElement = document.getElementById('totalRewards');
+                
+                if (levelElement) levelElement.textContent = `Level ${stats.currentLevel}`;
+                if (titleElement) titleElement.textContent = stats.levelTitle;
+                if (referralsElement) referralsElement.textContent = stats.totalReferrals;
+                if (rewardsElement) rewardsElement.textContent = `${stats.totalRewards} xCIS`;
+
+                // Update progress bar
+                const progressBar = document.getElementById('levelProgress');
+                const progressText = document.getElementById('progressText');
+                
+                if (progressBar && progressText) {
+                    if (stats.nextLevelRequirement) {
+                        const progress = ((stats.totalReferrals / stats.nextLevelRequirement) * 100).toFixed(1);
+                        progressBar.style.width = `${progress}%`;
+                        progressText.textContent = 
+                            `${stats.totalReferrals} / ${stats.nextLevelRequirement} referrals needed for next level`;
+                    } else {
+                        progressBar.style.width = '100%';
+                        progressText.textContent = 'Maximum level achieved!';
+                    }
+                }
+
+                // Update referral code
+                const codeInput = document.getElementById('referralCode');
+                if (codeInput) {
+                    codeInput.value = stats.referralCode;
+                }
+
+                // Update rewards table
+                const tableBody = document.getElementById('rewardsTableBody');
+                if (tableBody && window.referralSystem.levels) {
+                    tableBody.innerHTML = window.referralSystem.levels.map(level => `
+                        <tr class="${level.level <= stats.currentLevel ? 'achieved' : ''}">
+                            <td>Level ${level.level}</td>
+                            <td>${level.required} referrals</td>
+                            <td>${level.reward.xcis} xCIS ${level.reward.nft ? '+ NFT' : ''}</td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error updating referral stats:', error);
+                window.notifications?.show('Error updating referral stats', 'error');
+            }
+        }
+
+        // Enhanced copy referral code function
+        function copyReferralCode() {
+            const codeInput = document.getElementById('referralCode');
+            if (!codeInput?.value) {
+                window.notifications?.show('No referral code available', 'error');
+                return;
+            }
+
+            try {
+                codeInput.select();
+                document.execCommand('copy');
+                window.notifications?.show('Referral code copied to clipboard!', 'success');
+            } catch (error) {
+                console.error('Error copying referral code:', error);
+                window.notifications?.show('Failed to copy referral code', 'error');
+            }
+        }
+
+        // Add event listener for wallet changes
+        window.addEventListener('walletChanged', async () => {
+            updateWalletDisplay();
+            await updateReferralStats();
+        });
+
+        // Modal functions
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+            
+            modal.style.visibility = 'visible';
+            modal.style.display = 'flex';
+            // Force reflow
+            modal.offsetHeight;
+            modal.classList.add('show');
+
+            // Add to history for back button handling
+            window.history.pushState({ modalId }, '');
+            
+            // Dispatch show event
+            modal.dispatchEvent(new Event('show'));
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+
+            modal.classList.remove('show');
+            
+            setTimeout(() => {
+                modal.style.visibility = 'hidden';
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+                
+                if (modalId === 'miningModal' && window.miningSystem?.isActive) {
+                    window.miningSystem.stopMining();
+                }
+                
+                // Dispatch hide event
+                modal.dispatchEvent(new Event('hide'));
+            }, 300);
+        }
+
+        function showMiningSection() {
+            if (!window.cispWallet?.getCurrentWallet()) {
+                window.notifications?.show('Please connect your wallet first', 'warning');
+                return;
+            }
+            showModal('miningModal');
+        }
+
+        function showTransferModal() {
+            if (!window.cispWallet?.getCurrentWallet()) {
+                window.notifications?.show('Please connect your wallet first', 'warning');
+                return;
+            }
+            showModal('transferModal');
+        }
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (event) => {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    closeModal(modal.id);
+                }
+            });
+        });
+
+        // Close modals with Escape key
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (modal.style.display === 'block') {
+                        closeModal(modal.id);
+                    }
+                });
+            }
+        });
+
+        // Token transfer function
+        async function sendTokens() {
+            if (!window.cispWallet?.currentWallet) {
+                window.notifications.show('Please connect your wallet first', 'error');
+                return;
+            }
+
+            const tokenType = document.getElementById('tokenType').value;
+            const recipient = document.getElementById('recipientAddress').value;
+            const amount = parseFloat(document.getElementById('transferAmount').value);
+
+            if (!recipient || !amount) {
+                window.notifications.show('Please fill in all fields', 'error');
+                return;
+            }
+
+            const result = await window.tokenTransfer.sendTokens(
+                window.cispWallet.currentWallet.address,
+                recipient,
+                amount,
+                tokenType
+            );
+
+            window.notifications.show(result.message, result.success ? 'success' : 'error');
+            if (result.success) {
+                document.getElementById('transferModal').style.display = 'none';
+                document.getElementById('recipientAddress').value = '';
+                document.getElementById('transferAmount').value = '';
+            }
+        }
+
+        // Add touch event handlers for better mobile interaction
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prevent double-tap zoom on buttons and cards
+            const touchElements = document.querySelectorAll('.feature-card, button');
+            touchElements.forEach(element => {
+                element.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                });
+            });
+
+            // Add loading states to buttons
+            const actionButtons = document.querySelectorAll('button[onclick]');
+            actionButtons.forEach(button => {
+                const originalOnClick = button.onclick;
+                button.onclick = async function(e) {
+                    if (button.classList.contains('loading')) return;
+                    button.classList.add('loading');
+                    try {
+                        await originalOnClick.call(this, e);
+                    } finally {
+                        button.classList.remove('loading');
+                    }
+                };
+            });
+
+            // Handle network status
+            window.addEventListener('online', function() {
+                window.notifications?.show('Connection restored', 'success');
+            });
+
+            window.addEventListener('offline', function() {
+                window.notifications?.show('No internet connection', 'error');
+            });
+
+            // Handle visibility changes
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'visible') {
+                    updateWalletDisplay();
+                    updateReferralStats();
+                }
+            });
+
+            // Add pull-to-refresh functionality
+            let touchStart = 0;
+            let touchEnd = 0;
+
+            document.addEventListener('touchstart', function(e) {
+                touchStart = e.touches[0].clientY;
+            }, false);
+
+            document.addEventListener('touchend', function(e) {
+                touchEnd = e.changedTouches[0].clientY;
+                if (touchStart > touchEnd + 100 && window.scrollY === 0) {
+                    // Pull-to-refresh gesture detected
+                    location.reload();
+                }
+            }, false);
+        });
+
+        // Handle back button for modals
+        window.addEventListener('popstate', function(e) {
+            const openModals = document.querySelectorAll('.modal[style*="display: flex"]');
+            openModals.forEach(modal => closeModal(modal.id));
+        });
+
+        // Add error boundary
+        window.addEventListener('error', function(event) {
+            console.error('Global error:', event.error);
+            window.notifications?.show('An error occurred. Please try again.', 'error');
+        });
+
+        // Add connection check
+        function checkConnection() {
+            if (!navigator.onLine) {
+                window.notifications?.show('No internet connection', 'error');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

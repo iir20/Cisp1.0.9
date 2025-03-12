@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staking - COSMIC SPACE</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #2b1055, #7597de);
+      background-size: 400% 400%;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      animation: gradientShift 15s infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      text-align: center;
+      padding: 30px;
+      background: rgba(30, 30, 60, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      width: 90%;
+      max-width: 450px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .header h1 {
+      font-size: 1.8rem;
+      margin: 0;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .wallet-display {
+      background: rgba(30, 30, 60, 0.7);
+      color: white;
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(0, 150, 255, 0.3);
+    }
+
+    .wallet-display i {
+      color: #00ffcc;
+    }
+
+    .balance-section {
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(20, 20, 40, 0.6);
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .balance-title {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      color: #00c6ff;
+    }
+
+    .balance-cards {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .balance-card {
+      background: rgba(30, 30, 60, 0.7);
+      padding: 15px;
+      border-radius: 10px;
+      min-width: 120px;
+      transition: transform 0.3s ease;
+    }
+
+    .balance-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .balance-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 5px;
+    }
+
+    .balance-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #00ffcc;
+    }
+
+    .staking-section {
+      margin: 20px 0;
+    }
+
+    .staking-input {
+      width: 80%;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1.1rem;
+      text-align: center;
+      margin: 0 auto 20px;
+      display: block;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .staking-input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 198, 255, 0.5);
+    }
+
+    .staking-btn {
+      width: 80%;
+      padding: 15px;
+      margin: 10px auto;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+      display: block;
+    }
+
+    .staking-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 114, 255, 0.6);
+    }
+
+    .staking-btn:disabled {
+      background: linear-gradient(135deg, #666, #999);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .staking-btn.unstake {
+      background: linear-gradient(135deg, #ff7eb3, #ff758c);
+      box-shadow: 0 5px 15px rgba(255, 120, 140, 0.4);
+    }
+
+    .staking-btn.unstake:hover {
+      box-shadow: 0 8px 25px rgba(255, 120, 140, 0.6);
+    }
+
+    .staking-info {
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(20, 20, 40, 0.6);
+      border-radius: 15px;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .info-item:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .info-value {
+      font-weight: bold;
+      color: #00ffcc;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(-5px);
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast.success { 
+      background-color: #2ecc71; 
+      border-left: 5px solid #27ae60;
+    }
+
+    .toast.error { 
+      background-color: #e74c3c; 
+      border-left: 5px solid #c0392b;
+    }
+
+    .toast.info { 
+      background-color: #3498db; 
+      border-left: 5px solid #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Cosmic Staking</h1>
+      <div class="wallet-display">
+        <i class="fas fa-wallet"></i> <span id="wallet-address">Connect wallet on home page</span>
+      </div>
+    </div>
+
+    <div class="balance-section">
+      <div class="balance-title">Your Balance</div>
+      <div class="balance-cards">
+        <div class="balance-card">
+          <div class="balance-label">xCIS Balance</div>
+          <div class="balance-value" id="xcis-balance">0.00</div>
+        </div>
+        <div class="balance-card">
+          <div class="balance-label">Staked xCIS</div>
+          <div class="balance-value" id="staked-balance">0.00</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="staking-section">
+      <input type="number" id="stake-amount" class="staking-input" placeholder="Enter amount to stake" min="0" step="0.01">
+      <button id="stake-btn" class="staking-btn" onclick="handleStake()">Stake xCIS</button>
+      <button id="unstake-btn" class="staking-btn unstake" onclick="handleUnstake()">Unstake xCIS</button>
+    </div>
+
+    <div class="staking-info">
+      <div class="info-item">
+        <div class="info-label">Annual Yield</div>
+        <div class="info-value">12%</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Rewards Earned</div>
+        <div class="info-value" id="rewards-earned">0.00 xCIS</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Next Reward</div>
+        <div class="info-value" id="next-reward">0.00 xCIS</div>
+      </div>
+    </div>
+
+    <a href="home.html" class="back-button">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+  </div>
+
+  <script src="blockchain.js"></script>
+  <script src="cisp-wallet.js"></script>
+  <script src="cosmic-effects.js"></script>
+  <script>
+    // Initialize staking data
+    let stakingData = {
+      stakedAmount: 0,
+      rewardsEarned: 0,
+      stakingStartTime: 0,
+      annualYield: 0.12 // 12% annual yield
+    };
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load staking data from localStorage
+      loadStakingData();
+      
+      // Update UI
+      updateStakingUI();
+      
+      // Listen for wallet changes
+      window.addEventListener('walletChanged', function(event) {
+        updateWalletDisplay();
+        loadStakingData();
+        updateStakingUI();
+      });
+      
+      // Initial wallet display update
+      updateWalletDisplay();
+      
+      // Set up interval to update rewards in real-time
+      setInterval(updateRewards, 5000);
+    });
+    
+    // Update wallet address display
+    function updateWalletDisplay() {
+      const walletAddressElement = document.getElementById('wallet-address');
+      
+      if (window.cispWallet && window.cispWallet.currentWallet) {
+        const address = window.cispWallet.currentWallet.address;
+        // Format address to show only first and last few characters
+        const formattedAddress = address.substring(0, 6) + '...' + address.substring(address.length - 4);
+        walletAddressElement.textContent = formattedAddress;
+      } else {
+        walletAddressElement.textContent = 'Connect wallet on home page';
+      }
+    }
+    
+    // Load staking data from localStorage
+    function loadStakingData() {
+      if (!window.cispWallet || !window.cispWallet.currentWallet) return;
+      
+      const address = window.cispWallet.currentWallet.address;
+      const stakingStats = JSON.parse(localStorage.getItem('CISP_StakingStats') || '{}');
+      
+      if (stakingStats[address]) {
+        stakingData = stakingStats[address];
+      } else {
+        stakingData = {
+          stakedAmount: 0,
+          rewardsEarned: 0,
+          stakingStartTime: 0,
+          annualYield: 0.12
+        };
+      }
+    }
+    
+    // Save staking data to localStorage
+    function saveStakingData() {
+      if (!window.cispWallet || !window.cispWallet.currentWallet) return;
+      
+      const address = window.cispWallet.currentWallet.address;
+      const stakingStats = JSON.parse(localStorage.getItem('CISP_StakingStats') || '{}');
+      
+      stakingStats[address] = stakingData;
+      localStorage.setItem('CISP_StakingStats', JSON.stringify(stakingStats));
+    }
+    
+    // Update staking UI
+    function updateStakingUI() {
+      const isConnected = window.cispWallet && window.cispWallet.currentWallet;
+      
+      if (isConnected) {
+        const userData = getUserData();
+        
+        // Update balances
+        document.getElementById('xcis-balance').textContent = userData.balance.toFixed(2);
+        document.getElementById('staked-balance').textContent = stakingData.stakedAmount.toFixed(2);
+        
+        // Update rewards
+        document.getElementById('rewards-earned').textContent = stakingData.rewardsEarned.toFixed(4) + ' xCIS';
+        
+        // Calculate next reward
+        const nextReward = calculateNextReward();
+        document.getElementById('next-reward').textContent = nextReward.toFixed(4) + ' xCIS/day';
+        
+        // Enable/disable buttons based on balances
+        document.getElementById('stake-btn').disabled = userData.balance <= 0;
+        document.getElementById('unstake-btn').disabled = stakingData.stakedAmount <= 0;
+      } else {
+        // Reset UI for disconnected state
+        document.getElementById('xcis-balance').textContent = '0.00';
+        document.getElementById('staked-balance').textContent = '0.00';
+        document.getElementById('rewards-earned').textContent = '0.00 xCIS';
+        document.getElementById('next-reward').textContent = '0.00 xCIS/day';
+        
+        // Disable buttons
+        document.getElementById('stake-btn').disabled = true;
+        document.getElementById('unstake-btn').disabled = true;
+      }
+    }
+    
+    // Calculate next reward (daily)
+    function calculateNextReward() {
+      const dailyYield = stakingData.annualYield / 365;
+      return stakingData.stakedAmount * dailyYield;
+    }
+    
+    // Update rewards based on time elapsed
+    function updateRewards() {
+      if (stakingData.stakedAmount <= 0 || stakingData.stakingStartTime === 0) return;
+      
+      const now = Date.now();
+      const timeElapsed = (now - stakingData.stakingStartTime) / 1000; // in seconds
+      const secondsInYear = 365 * 24 * 60 * 60;
+      
+      // Calculate rewards based on time elapsed
+      const newRewards = stakingData.stakedAmount * (stakingData.annualYield * timeElapsed / secondsInYear);
+      
+      // Update rewards
+      stakingData.rewardsEarned = newRewards;
+      stakingData.stakingStartTime = now;
+      
+      // Save updated data
+      saveStakingData();
+      
+      // Update UI
+      document.getElementById('rewards-earned').textContent = stakingData.rewardsEarned.toFixed(4) + ' xCIS';
+    }
+    
+    // Handle stake button click
+    function handleStake() {
+      if (!window.cispWallet || !window.cispWallet.currentWallet) {
+        showToast('Please connect your wallet on the home page first', 'error');
+        return;
+      }
+      
+      const amount = parseFloat(document.getElementById('stake-amount').value);
+      
+      if (!amount || amount <= 0) {
+        showToast('Please enter a valid amount', 'error');
+        return;
+      }
+      
+      const userData = getUserData();
+      
+      if (amount > userData.balance) {
+        showToast('Insufficient balance', 'error');
+        return;
+      }
+      
+      // Update staking data
+      stakingData.stakedAmount += amount;
+      stakingData.stakingStartTime = Date.now();
+      
+      // Update blockchain balances
+      if (window.cispChain) {
+        const address = window.cispWallet.currentWallet.address;
+        
+        // Create staking transaction
+        const stakeTx = new Transaction(
+          address,
+          'CISP_STAKING',
+          amount,
+          'STAKE'
+        );
+        
+        cispChain.pendingTransactions.push(stakeTx);
+        
+        // Update balance directly
+        if (!cispChain.addresses[address]) {
+          cispChain.addresses[address] = { xCIS: 0, CIS: 0, nfts: [] };
+        }
+        
+        cispChain.addresses[address].xCIS -= amount;
+      }
+      
+      // Save staking data
+      saveStakingData();
+      
+      // Clear input field
+      document.getElementById('stake-amount').value = '';
+      
+      // Update UI
+      updateStakingUI();
+      
+      // Show success message
+      showToast(`Successfully staked ${amount} xCIS`, 'success');
+    }
+    
+    // Handle unstake button click
+    function handleUnstake() {
+      if (!window.cispWallet || !window.cispWallet.currentWallet) {
+        showToast('Please connect your wallet on the home page first', 'error');
+        return;
+      }
+      
+      if (stakingData.stakedAmount <= 0) {
+        showToast('No xCIS staked', 'error');
+        return;
+      }
+      
+      const amount = parseFloat(document.getElementById('stake-amount').value);
+      
+      // If no amount specified, unstake all
+      const unstakeAmount = amount && amount > 0 ? 
+        Math.min(amount, stakingData.stakedAmount) : 
+        stakingData.stakedAmount;
+      
+      // Update staking data
+      stakingData.stakedAmount -= unstakeAmount;
+      
+      // Add rewards to unstaked amount
+      const totalUnstaked = unstakeAmount + stakingData.rewardsEarned;
+      stakingData.rewardsEarned = 0;
+      
+      // Reset staking start time if fully unstaked
+      if (stakingData.stakedAmount <= 0) {
+        stakingData.stakingStartTime = 0;
+      } else {
+        stakingData.stakingStartTime = Date.now();
+      }
+      
+      // Update blockchain balances
+      if (window.cispChain) {
+        const address = window.cispWallet.currentWallet.address;
+        
+        // Create unstaking transaction
+        const unstakeTx = new Transaction(
+          'CISP_STAKING',
+          address,
+          totalUnstaked,
+          'UNSTAKE'
+        );
+        
+        cispChain.pendingTransactions.push(unstakeTx);
+        
+        // Update balance directly
+        if (!cispChain.addresses[address]) {
+          cispChain.addresses[address] = { xCIS: 0, CIS: 0, nfts: [] };
+        }
+        
+        cispChain.addresses[address].xCIS += totalUnstaked;
+      }
+      
+      // Save staking data
+      saveStakingData();
+      
+      // Clear input field
+      document.getElementById('stake-amount').value = '';
+      
+      // Update UI
+      updateStakingUI();
+      
+      // Show success message
+      showToast(`Successfully unstaked ${unstakeAmount.toFixed(2)} xCIS + ${stakingData.rewardsEarned.toFixed(4)} xCIS rewards`, 'success');
+    }
+    
+    // Function to show toast notifications
+    function showToast(message, type = 'info') {
+      // Create toast element if it doesn't exist
+      let toast = document.querySelector('.toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.className = 'toast';
+        document.body.appendChild(toast);
+      }
+      
+      // Set message and type
+      toast.textContent = message;
+      toast.className = `toast ${type}`;
+      
+      // Show toast
+      toast.classList.add('show');
+      
+      // Hide toast after 3 seconds
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+  
+  <!-- Add our enhanced scripts -->
+  <script src="enhanced-cosmic-effects.js"></script>
+  <script src="improved-wallet-sync.js"></script>
+  <script src="global-coordination.js"></script>
+</body>
+</html>

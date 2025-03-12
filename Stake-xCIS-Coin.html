@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>xCIS Staking Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #2b1055, #7597de);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      width: 90%;
+      max-width: 600px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .balance {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      margin: 20px 0;
+    }
+
+    input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 10px;
+    }
+
+    .api-options {
+      text-align: left;
+      font-size: 14px;
+      margin: 20px 0;
+    }
+
+    .api-options input {
+      margin-right: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(135deg, #ff7eb3, #ff758c);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(255, 120, 140, 0.5);
+    }
+
+    .stake-list {
+      margin-top: 20px;
+    }
+
+    .stake-item {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 10px;
+      text-align: left;
+      font-size: 14px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .stake-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .claim-btn {
+      float: right;
+      padding: 5px 10px;
+      font-size: 12px;
+      background: linear-gradient(135deg, #7ed6df, #22a6b3);
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .claim-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(34, 166, 179, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="main-container">
+    <button class="wallet-connect">Wallet Connect</button>
+    <h1>Cosmic Space Protocol</h1>
+    <div class="balance">
+      <p>Balance</p>
+      <p>xCIS: 00</p>
+      <p>CIS: 00</p>
+    </div>
+    <button id="stake-xcis-btn">Stake Your xCIS Coin</button>
+  </div>
+
+  <div class="container" id="xcis-staking-page" style="display: none;">
+    <button class="wallet-connect">Wallet Connect</button>to 
+    <h1>xCIS Staking Page</h1>
+    <div class="balance">
+      <p>Balance</p>
+      <p>xCIS: 00</p>
+      <p>CIS: 00</p>
+    </div>
+    <div class="input-group">
+      <input type="text" placeholder="Enter xCIS Amount">
+    </div>
+    <div class="api-options">
+      <label><input type="radio" name="duration" value="30"> 30 Days - 130% APY</label><br>
+      <label><input type="radio" name="duration" value="60"> 60 Days - 160% APY</label><br>
+      <label><input type="radio" name="duration" value="90"> 90 Days - 190% APY</label><br>
+      <label><input type="radio" name="duration" value="120">120 Days- 220% APY</label>
+    </div>
+    <button>Stake</button>
+    <div class="stake-list">
+      <div class="stake-item">
+        100 xCIS - 30 Days (Probably 150 xCIS)
+        <button class="claim-btn">Claim</button>
+      </div>
+      <div class="stake-item">
+        100 xCIS - 30 Days (Probably 150 xCIS)
+        <button class="claim-btn">Claim</button>
+      </div>
+      <div class="stake-item">
+        100 xCIS - 30 Days (Probably 150 xCIS)
+        <button class="claim-btn">Claim</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const stakeXcisBtn = document.getElementById('stake-xcis-btn');
+    const mainContainer = document.getElementById('main-container');
+    const xcisStakingPage = document.getElementById('xcis-staking-page');
+
+    stakeXcisBtn.addEventListener('click', () => {
+      mainContainer.style.display = 'none';
+      xcisStakingPage.style.display = 'block';
+    });
+  </script>
+</body>
+</html>

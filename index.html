@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COSMIC SPACE - Web3 Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="Welcome to Cosmic Space Protocol - Your Gateway to Web3 Space Exploration">
+    
+    <!-- Core styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-home.css">
+    
+    <!-- Initialize blockchain -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Initialize systems in correct order after scripts are loaded
+                console.log('DOM loaded, scripts will initialize systems');
+            } catch (error) {
+                console.error('Error in DOMContentLoaded listener:', error);
+            }
+        });
+    </script>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #7f00ff, #e100ff);
+            --secondary-gradient: linear-gradient(135deg, #2d3748, #1a202c);
+            --accent-color: #e100ff;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --background-dark: rgba(10, 11, 30, 0.8);
+            --card-background: rgba(20, 21, 40, 0.9); /* Ensure this line is correct */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0b1e;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .cosmic-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1a1f3c 0%, #0a0b1e 100%);
+            z-index: -2;
+        }
+
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: twinkle 5s infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.4; }
+            100% { opacity: 0.3; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero-section {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(225, 0, 255, 0.3);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .cta-button {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cta-primary {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            box-shadow: 0 10px 25px rgba(127, 0, 255, 0.3);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(127, 0, 255, 0.5);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cta-secondary:hover {
+            border-color: var(--accent-color);
+            background: rgba(225, 0, 255, 0.1);
+        }
+
+        .features-section {
+            padding: 4rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--card-background);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 35px rgba(127, 0, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .wallet-section {
+            padding: 4rem 0;
+            background: var(--background-dark);
+            border-radius: 30px;
+            margin: 2rem 0;
+        }
+
+        .wallet-connect-button {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem auto;
+        }
+
+        .wallet-connect-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(127, 0, 255, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .feature-card {
+                margin: 1rem;
+            }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 20px rgba(225, 0, 255, 0.3); }
+            50% { text-shadow: 0 0 30px rgba(225, 0, 255, 0.5); }
+            100% { text-shadow: 0 0 20px rgba(225, 0, 255, 0.3); }
+        }
+
+        .referral-section {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .referral-section h3 {
+            margin: 0 0 1rem 0;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .referral-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .referral-input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(225, 0, 255, 0.2);
+        }
+
+        .welcome-nft-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            animation: welcomeNFT 5s ease-in-out forwards;
+        }
+
+        .welcome-message {
+            text-align: center;
+        }
+
+        .welcome-rewards {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .reward-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+        }
+
+        .reward-item i {
+            color: var(--accent-color);
+        }
+
+        @keyframes welcomeNFT {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            20% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            80% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+        }
+
+        /* Additional styles for improved wallet interface */
+        .wallet-container {
+            background: rgba(30, 35, 60, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .wallet-interface {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .wallet-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .wallet-options {
+            display: flex;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .wallet-option {
+            flex: 1;
+            padding: 0.8rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .wallet-option.active {
+            background: var(--primary-gradient);
+            font-weight: 600;
+        }
+        
+        .wallet-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-group label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .form-input {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(225, 0, 255, 0.2);
+        }
+        
+        .wallet-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .action-button {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .action-button.primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 8px 15px rgba(127, 0, 255, 0.2);
+        }
+        
+        .action-button.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(127, 0, 255, 0.3);
+        }
+        
+        .action-button.secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .action-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .wallet-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .wallet-footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        .wallet-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .wallet-address {
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+        
+        .wallet-balance {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .wallet-balance-amount {
+            font-weight: 600;
+        }
+        
+        .wallet-connected {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .connection-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #48bb78;
+        }
+        
+        .loader {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+        }
+        
+        .loader-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-color);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .wallet-section {
+            transition: all 0.5s ease;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .methods-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+        }
+        
+        .methods-divider::before,
+        .methods-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-background"></div>
+    <div class="stars"></div>
+
+    <div class="container">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">COSMIC SPACE PROTOCOL</h1>
+                <p class="hero-subtitle">Embark on a journey through the decentralized cosmos. Mine, trade, and explore the future of Web3 space exploration.</p>
+                <div class="cta-buttons">
+                    <button class="cta-button cta-primary" onclick="enterCosmos()" id="enter-cosmos-btn">
+                        <i class="fas fa-rocket"></i> Enter Cosmos
+                    </button>
+                    
+                    <div class="wallet-container fade-in">
+                        <div class="wallet-header">
+                            <h3>Connect to Cosmic Space</h3>
+                            <p>Create a wallet or connect an existing one</p>
+                        </div>
+                        
+                        <div class="wallet-options">
+                            <div class="wallet-option active" onclick="switchWalletOption('create')">Create New</div>
+                            <div class="wallet-option" onclick="switchWalletOption('import')">Import Existing</div>
+                        </div>
+                        
+                        <div class="wallet-interface" id="wallet-create-section">
+                            <div class="wallet-form">
+                                <div class="form-group">
+                                    <label for="walletName">Wallet Name</label>
+                                    <input type="text" id="walletName" class="form-input" 
+                                           placeholder="Enter wallet name (min 3 characters)" 
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="walletPassword">Password</label>
+                                    <input type="password" id="walletPassword" class="form-input" 
+                                           placeholder="Create a secure password (min 6 characters)" 
+                                           required>
+                                </div>
+                                <div class="wallet-actions">
+                                    <button class="action-button primary" onclick="createWallet()" id="create-wallet-btn">
+                                        <i class="fas fa-wallet"></i> Create Wallet
+                                    </button>
+                                </div>
+                                <div id="loadingIndicator" class="loader" style="display:none;">
+                                    <div class="loader-spinner"></div>
+                                    <span>Creating your wallet...</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="wallet-interface" id="wallet-import-section" style="display:none;">
+                            <div class="wallet-form">
+                                <div class="form-group">
+                                    <label for="seedPhrase">Seed Phrase</label>
+                                    <textarea id="seedPhrase" class="form-input" rows="3" 
+                                              placeholder="Enter your 12 or 24 word seed phrase"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="importPassword">Password</label>
+                                    <input type="password" id="importPassword" class="form-input" 
+                                           placeholder="Create a password for this wallet">
+                                </div>
+                                <div class="wallet-actions">
+                                    <button class="action-button primary" onclick="importWalletFromSeed()">
+                                        <i class="fas fa-file-import"></i> Import Wallet
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="wallet-footer">
+                            By creating a wallet, you agree to the <a href="#">Terms of Service</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-hammer feature-icon"></i>
+                    <h3 class="feature-title">Cosmic Mining</h3>
+                    <p class="feature-description">Mine xCIS tokens with advanced mining algorithms and earn rewards in real-time.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-gem feature-icon"></i>
+                    <h3 class="feature-title">NFT Collection</h3>
+                    <p class="feature-description">Discover and collect unique cosmic NFTs with real utility in the ecosystem.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-lock feature-icon"></i>
+                    <h3 class="feature-title">Secure Staking</h3>
+                    <p class="feature-description">Stake your tokens to earn passive rewards and participate in governance.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Wallet Modal -->
+    <div id="importWalletModal" class="modal" role="dialog" aria-labelledby="importWalletModalTitle" aria-describedby="importWalletModalDescription">
+        <div class="modal-content" id="importWalletModalDescription">
+            <span class="close-modal" onclick="closeModal('importWalletModal')">&times;</span>
+            <h2 class="modal-title" id="importWalletModalTitle">Import Wallet</h2>
+            <div class="import-form">
+                <div class="form-group">
+                    <label for="seedPhrase">Enter Seed Phrase</label>
+                    <textarea id="seedPhrase" rows="3" placeholder="Enter your 12 or 24 word seed phrase"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="walletPassword">Password</label>
+                    <input type="password" id="walletPassword" placeholder="Create a password">
+                </div>
+                <button class="action-button" onclick="importWalletFromSeed()">
+                    <i class="fas fa-download"></i> Import Wallet
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Wallet Created Modal -->
+    <div id="newWalletModal" class="modal" role="dialog" aria-labelledby="newWalletModalTitle" aria-describedby="newWalletModalDescription">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('newWalletModal')">&times;</span>
+            <h2 class="modal-title" id="newWalletModalTitle">Create Your Cosmic Wallet</h2>
+            
+            <!-- Referral Code Input -->
+            <div class="referral-section">
+                <h3>Have a Referral Code?</h3>
+                <div class="form-group">
+                    <input type="text" id="referralCodeInput" placeholder="Enter referral code (optional)" class="referral-input">
+                </div>
+            </div>
+
+            <div class="seed-phrase-container">
+                <div class="warning-text">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Save your seed phrase! You won't be able to see it again.
+                </div>
+                <div class="seed-phrase" id="newSeedPhrase"></div>
+                <button class="copy-btn" onclick="copySeedPhrase()">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+            </div>
+            <div class="confirmation-checkbox">
+                <input type="checkbox" id="seedConfirmation">
+                <label for="seedConfirmation">I have saved my seed phrase in a secure location</label>
+            </div>
+            <button class="action-button" onclick="confirmNewWallet()" id="confirmWalletBtn" disabled>
+                <i class="fas fa-check"></i> Continue
+            </button>
+        </div>
+    </div>
+
+    <!-- Add Wallet Modal -->
+    <div id="addWalletModal" class="modal" role="dialog" aria-labelledby="addWalletModalTitle" aria-describedby="addWalletModalDescription">
+        <div class="modal-content" id="addWalletModalDescription">
+            <span class="close-modal" onclick="closeModal('addWalletModal')">&times;</span>
+            <h2 class="modal-title" id="addWalletModalTitle">Add Another Wallet</h2>
+            <div class="modal-body">
+                <button class="modal-button" onclick="createNewWallet()">
+                    <i class="fas fa-plus-circle"></i> Create New Wallet
+                </button>
+                <div class="modal-divider"><span>OR</span></div>
+                <button class="modal-button secondary" onclick="showImportWalletModal(); closeModal('addWalletModal')">
+                    <i class="fas fa-file-import"></i> Import Existing Wallet
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include our fix scripts BEFORE other scripts -->
+    <script src="wallet-balance-fix.js"></script>
+    <script src="mining-system-fix.js"></script>
+    <script src="new-user-gift-fix.js"></script>
+
+    <!-- Include the wallet reconnect fix script -->
+    <script src="wallet-reconnect-fix.js"></script>
+
+    <!-- Include the global state sync script -->
+    <script src="global-state-sync.js"></script>
+
+    <!-- Include the NFT page fix script -->
+    <script src="nft-page-fix.js"></script>
+
+    <!-- Include the global coordination script -->
+    <script src="global-coordination.js"></script>
+
+    <!-- Then include the existing scripts in the proper order -->
+    <script src="blockchain.js"></script>
+    <script src="cisp-wallet.js"></script>
+    <script src="nft-system.js"></script>
+    <script src="notifications.js"></script>
+    <script src="mining.js"></script>
+    <script src="cosmic-effects.js"></script>
+    <script src="walletconnect.js"></script>
+    <script src="share-modal.js"></script>
+
+    <!-- Add meta tag for mobile web app capability -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add before the closing </body> tag -->
+    <script src="enhanced-cosmic-effects.js"></script>
+    <script src="improved-wallet-sync.js"></script>
+
+    <script>
+        // Initialize systems in correct order
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // Initialize notification system
+                if (window.notifications) {
+                    window.notifications.init();
+                    console.log('Notification system initialized');
+                } else {
+                    console.error('Notifications system not available');
+                }
+
+                // Initialize blockchain
+                if (window.cispChain) {
+                    await window.cispChain.init();
+                    console.log('Blockchain initialized');
+                } else {
+                    console.error('Blockchain system not available');
+                }
+
+                // Initialize NFT system
+                if (window.nftSystem) {
+                    console.log('NFT system available');
+                } else {
+                    console.error('NFT system not available');
+                }
+
+                // Initialize wallet system
+                if (window.cispWallet) {
+                    await window.cispWallet.init();
+                    console.log('Wallet system initialized');
+                } else {
+                    console.error('Wallet system not available');
+                }
+
+                // Initialize page
+                initializePage();
+                updateWalletList();
+                
+                // Apply visual effects if available
+                if (typeof createStars === 'function') {
+                    createStars();
+                }
+                if (typeof createHeroStars === 'function') {
+                    createHeroStars();
+                }
+
+            } catch (error) {
+                console.error('Initialization error:', error);
+                if (window.notifications) {
+                    window.notifications.show('Failed to initialize application. Please refresh the page.', 'error');
+                }
+            }
+        });
+
+        function createStars() {
+            const starsContainer = document.getElementById('stars-container');
+            const starsCount = 150;
+            
+            starsContainer.innerHTML = '';
+            
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'cosmic-star';
+                star.style.width = `${Math.random() * 3}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        function createHeroStars() {
+            const heroStars = document.getElementById('hero-stars');
+            const starsCount = 50;
+            
+            heroStars.innerHTML = '';
+            
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'cosmic-star';
+                star.style.width = `${Math.random() * 3}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                heroStars.appendChild(star);
+            }
+        }
+
+        function initializePage() {
+            if (window.cispWallet?.currentWallet) {
+                showCosmicEntry();
+            }
+            
+            const seedConfirmation = document.getElementById('seedConfirmation');
+            const confirmWalletBtn = document.getElementById('confirmWalletBtn');
+            
+            if (seedConfirmation && confirmWalletBtn) {
+                seedConfirmation.addEventListener('change', function(e) {
+                    confirmWalletBtn.disabled = !e.target.checked;
+                });
+            }
+
+            window.onclick = function(event) {
+                if (event.target.classList.contains('modal')) {
+                    closeModal(event.target.id);
+                }
+            };
+        }
+
+        function updateWalletList() {
+            const walletList = document.getElementById('walletList');
+            if (!walletList) return;
+
+            const wallets = window.cispWallet?.getWallets() || [];
+            
+            if (wallets.length === 0) {
+                walletList.innerHTML = '<div class="empty-state">No wallets connected</div>';
+                return;
+            }
+            
+            walletList.innerHTML = wallets.map(wallet => `
+                <div class="wallet-item ${wallet.address === window.cispWallet?.currentWallet?.address ? 'active' : ''}"
+                     onclick="switchWallet('${wallet.address}')">
+                    <div class="wallet-item-info">
+                        <span class="wallet-name">${wallet.name || 'Wallet'}</span>
+                        <span class="wallet-address">${wallet.address.substring(0, 6)}...${wallet.address.substring(wallet.address.length - 4)}</span>
+                    </div>
+                    <button class="disconnect-btn" onclick="event.stopPropagation(); disconnectWallet('${wallet.address}')">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        async function createNewWallet() {
+            try {
+                // Show loading state
+                const createButton = document.querySelector('#create-wallet-btn');
+                createButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Wallet...';
+                createButton.disabled = true;
+
+                // Create wallet
+                const wallet = await window.cispWallet.createWallet();
+                
+                // Add initial balance of 100 xCIS
+                await window.blockchain.addBalance(wallet.address, 'xCIS', 100);
+                
+                // Mint welcome NFT
+                const welcomeNFT = await window.nftSystem.mintNFT(
+                    wallet.address,
+                    'random', // Random category
+                    null, // Let rarity be random
+                    true // Mark as welcome NFT
+                );
+
+                // Update UI
+                document.getElementById('wallet-address').textContent = wallet.address;
+                document.getElementById('xcis-balance').textContent = '100.00';
+                document.getElementById('cis-balance').textContent = '0.00';
+
+                // Show success message with NFT details
+                const message = `
+                    <div class="welcome-message">
+                        <h3>🎉 Welcome to Cosmic Space Protocol!</h3>
+                        <p>Your wallet has been created successfully.</p>
+                        <div class="welcome-rewards">
+                            <div class="reward-item">
+                                <i class="fas fa-coins"></i>
+                                <span>100 xCIS Added to Your Wallet</span>
+                            </div>
+                            <div class="reward-item">
+                                <i class="fas fa-gift"></i>
+                                <span>Welcome NFT: ${welcomeNFT.name}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Show success notification
+                window.notifications.show(message, 'success', 8000); // Show for 8 seconds
+
+                // Add welcome NFT animation
+                showWelcomeNFTAnimation(welcomeNFT, wallet);
+
+                // Update all balance displays
+                updateAllBalances();
+
+                // Close modal
+                closeModal('create-wallet-modal');
+
+                // Enable enter app button
+                document.getElementById('enter-app-btn').disabled = false;
+
+            } catch (error) {
+                console.error('Error creating wallet:', error);
+                window.notifications.show('Failed to create wallet: ' + error.message, 'error');
+                
+                // Reset button state
+                createButton.innerHTML = 'Create New Wallet';
+                createButton.disabled = false;
+            }
+        }
+
+        function showWelcomeNFTAnimation(nft, wallet) {
+            // Create animation container
+            const animationContainer = document.createElement('div');
+            animationContainer.className = 'welcome-nft-animation';
+            
+            // Create content
+            const content = `
+                <div class="welcome-message">
+                    <h2>Welcome to Cosmic Space!</h2>
+                    <p>Your wallet <strong>${formatAddress(wallet.address)}</strong> is ready!</p>
+                    
+                    <div class="welcome-rewards">
+                        <div class="reward-item">
+                            <i class="fas fa-coins"></i>
+                            <span>100 xCIS added to your wallet</span>
+                        </div>
+                        <div class="reward-item">
+                            <i class="fas fa-gift"></i>
+                            <span>Welcome NFT added to your collection</span>
+                        </div>
+                    </div>
+                    
+                    <div class="nft-preview">
+                        <img src="${nft.image || 'img/nft-placeholder.png'}" alt="Welcome NFT" />
+                        <p>${nft.name || 'Cosmic NFT'}</p>
+                    </div>
+                </div>
+            `;
+            
+            animationContainer.innerHTML = content;
+            document.body.appendChild(animationContainer);
+            
+            // Remove after animation completes
+            setTimeout(() => {
+                document.body.removeChild(animationContainer);
+            }, 5000);
+        }
+
+        function updateAllBalances() {
+            const wallet = window.cispWallet.getCurrentWallet();
+            if (wallet) {
+                const xcisBalance = window.blockchain.getBalanceXCIS(wallet.address);
+                const cisBalance = window.blockchain.getBalanceCIS(wallet.address);
+
+                // Update all xcis balance displays
+                document.querySelectorAll('.xcis-balance').forEach(element => {
+                    element.textContent = xcisBalance.toFixed(2);
+                });
+
+                // Update all cis balance displays
+                document.querySelectorAll('.cis-balance').forEach(element => {
+                    element.textContent = cisBalance.toFixed(2);
+                });
+            }
+        }
+
+        async function confirmNewWallet() {
+            if (!window.tempWallet) return;
+            
+            try {
+                const referralCode = document.getElementById('referralCodeInput')?.value;
+                
+                // Apply referral code if provided
+                if (referralCode) {
+                    try {
+                        await window.referralSystem.applyReferralCode(window.tempWallet.address, referralCode);
+                        window.notifications?.show('Referral code applied successfully!', 'success');
+                    } catch (error) {
+                        window.notifications?.show('Invalid referral code: ' + error.message, 'warning');
+                        return;
+                    }
+                }
+
+                await onboardNewUser(window.tempWallet);
+                showCosmicEntry();
+                updateWalletList();
+                closeModal('newWalletModal');
+                
+                delete window.tempWallet;
+                
+            } catch (error) {
+                window.notifications?.show(error.message, 'error');
+            }
+        }
+
+        async function onboardNewUser(wallet) {
+            if (!wallet?.address) return;
+            
+            try {
+                // Grant initial tokens
+                await window.blockchain.grantInitialTokens(wallet.address, 100);
+                
+                // Mint welcome NFT
+                const nft = await window.nftSystem.mintRandomNFT(wallet.address);
+                
+                // Generate referral code
+                const referralCode = window.referralSystem.generateReferralCode(wallet.address);
+                
+                window.notifications?.show(
+                    `Welcome to Cosmic Space!\n` +
+                    `• Received: 100 xCIS\n` +
+                    `• Welcome NFT: ${nft.name}\n` +
+                    `• Your Referral Code: ${referralCode}`,
+                    'success',
+                    10000
+                );
+            } catch (error) {
+                window.notifications?.show('Error during onboarding: ' + error.message, 'error');
+            }
+        }
+
+        function showImportWalletModal() {
+            const modal = document.getElementById('importWalletModal');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
+
+        function showAddWalletModal() {
+            const modal = document.getElementById('addWalletModal');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
+
+        async function importWalletFromSeed() {
+            const seedPhrase = document.getElementById('seedPhrase')?.value;
+            const password = document.getElementById('walletPassword')?.value;
+
+            if (!seedPhrase || !password) {
+                window.notifications?.show('Please fill in all fields', 'error');
+                return;
+            }
+
+            try {
+                await window.cispWallet.importWallet(seedPhrase, password);
+                showCosmicEntry();
+                updateWalletList();
+                closeModal('importWalletModal');
+                window.notifications?.show('Wallet imported successfully!', 'success');
+            } catch (error) {
+                window.notifications?.show(error.message, 'error');
+            }
+        }
+
+        async function switchWallet(address) {
+            if (!address) return;
+            
+            try {
+                await window.cispWallet.switchWallet(address);
+                showCosmicEntry();
+                updateWalletList();
+                window.notifications?.show('Wallet switched successfully', 'success');
+            } catch (error) {
+                window.notifications?.show(error.message, 'error');
+            }
+        }
+
+        async function disconnectWallet(address) {
+            if (!address) return;
+            
+            try {
+                await window.cispWallet.disconnectWallet(address);
+                updateWalletList();
+                if (!window.cispWallet?.currentWallet) {
+                    hideCosmicEntry();
+                }
+                window.notifications?.show('Wallet disconnected successfully', 'success');
+            } catch (error) {
+                window.notifications?.show(error.message, 'error');
+            }
+        }
+
+        function showCosmicEntry() {
+            const cosmicEntry = document.getElementById('cosmic-entry');
+            if (cosmicEntry) {
+                cosmicEntry.style.display = 'flex';
+            }
+        }
+
+        function hideCosmicEntry() {
+            const cosmicEntry = document.getElementById('cosmic-entry');
+            if (cosmicEntry) {
+                cosmicEntry.style.display = 'none';
+            }
+        }
+
+        function copySeedPhrase() {
+            const seedPhrase = document.getElementById('newSeedPhrase')?.textContent;
+            if (seedPhrase) {
+                navigator.clipboard.writeText(seedPhrase)
+                    .then(() => {
+                        window.notifications?.show('Seed phrase copied to clipboard!', 'success');
+                    })
+                    .catch(error => {
+                        window.notifications?.show('Failed to copy seed phrase', 'error');
+                    });
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+                
+                if (modalId === 'importWalletModal') {
+                    const seedPhrase = document.getElementById('seedPhrase');
+                    const password = document.getElementById('walletPassword');
+                    if (seedPhrase) seedPhrase.value = '';
+                    if (password) password.value = '';
+                }
+            }
+        }
+
+        async function createWallet() {
+            const walletName = document.getElementById('walletName').value;
+            const password = document.getElementById('walletPassword').value;
+
+            if (walletName.length < 3) {
+                window.notifications?.show('Wallet name must be at least 3 characters long', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                window.notifications?.show('Password must be at least 6 characters long', 'error');
+                return;
+            }
+
+            // Show loading indicator with animation
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const createButton = document.getElementById('create-wallet-btn');
+            
+            loadingIndicator.style.display = 'flex';
+            createButton.disabled = true;
+            createButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+
+            try {
+                // Create the wallet
+                const wallet = await window.cispWallet.createWallet(walletName, password);
+                
+                // Add 100 xCIS tokens to the wallet
+                if (window.blockchain) {
+                    await window.blockchain.addBalance(wallet.address, 'xCIS', 100);
+                }
+                
+                // Mint a random welcome NFT
+                let welcomeNFT = null;
+                if (window.nftSystem) {
+                    welcomeNFT = await window.nftSystem.mintRandomNFT(wallet.address);
+                }
+                
+                // Update all UI elements that display balance
+                updateAllBalances();
+                
+                // Hide loading indicator and reset button
+                loadingIndicator.style.display = 'none';
+                createButton.disabled = false;
+                createButton.innerHTML = '<i class="fas fa-wallet"></i> Create Wallet';
+                
+                // Show success notification
+                window.notifications?.show('Wallet created successfully!', 'success');
+                
+                // Show welcome animation with NFT
+                if (welcomeNFT) {
+                    showWelcomeNFTAnimation(welcomeNFT, wallet);
+                }
+                
+                // Update wallet status UI with new wallet
+                updateWalletStatusUI(wallet);
+                
+                // Enable enter cosmos button
+                const enterButton = document.getElementById('enter-cosmos-btn');
+                enterButton.classList.add('pulse-animation');
+                
+                // Store wallet info in sessionStorage for cross-page access
+                storeWalletSessionData(wallet);
+                
+                // Update the wallet list and connection status
+                updateWalletList();
+                
+                // Show the enter cosmos button
+                showCosmicEntry();
+                
+            } catch (error) {
+                console.error('Error creating wallet:', error);
+                loadingIndicator.style.display = 'none';
+                createButton.disabled = false;
+                createButton.innerHTML = '<i class="fas fa-wallet"></i> Create Wallet';
+                window.notifications?.show('Failed to create wallet: ' + (error.message || 'Unknown error'), 'error');
+            }
+        }
+
+        // Function to update wallet status UI
+        function updateWalletStatusUI(wallet) {
+            const walletContainer = document.querySelector('.wallet-container');
+            
+            // Create wallet status element if it doesn't exist
+            let walletStatus = document.querySelector('.wallet-status');
+            if (!walletStatus) {
+                walletStatus = document.createElement('div');
+                walletStatus.className = 'wallet-status fade-in';
+                walletContainer.prepend(walletStatus);
+            }
+            
+            // Update wallet status content
+            walletStatus.innerHTML = `
+                <div class="wallet-connected">
+                    <div class="connection-indicator"></div>
+                    <span>Connected</span>
+                </div>
+                <div class="wallet-address">${formatAddress(wallet.address)}</div>
+                <div class="wallet-balance">
+                    <i class="fas fa-coins"></i>
+                    <span class="wallet-balance-amount" data-token="xCIS">100</span> xCIS
+                </div>
+            `;
+            
+            // Update form to show "Wallet Connected" state
+            document.querySelector('.wallet-form').style.display = 'none';
+            document.querySelector('.wallet-options').style.display = 'none';
+            
+            // Add disconnect option
+            const disconnectOption = document.createElement('div');
+            disconnectOption.className = 'wallet-actions';
+            disconnectOption.innerHTML = `
+                <button class="action-button secondary" onclick="disconnectCurrentWallet()">
+                    <i class="fas fa-sign-out-alt"></i> Disconnect Wallet
+                </button>
+            `;
+            walletContainer.querySelector('.wallet-interface').appendChild(disconnectOption);
+        }
+        
+        // Function to store wallet data in sessionStorage for cross-page access
+        function storeWalletSessionData(wallet) {
+            const walletData = {
+                address: wallet.address,
+                name: wallet.name || 'My Wallet',
+                balance: 100,
+                connected: true,
+                lastAccessed: Date.now()
+            };
+            
+            sessionStorage.setItem('current_wallet', JSON.stringify(walletData));
+            localStorage.setItem('last_wallet', wallet.address);
+        }
+        
+        // Function to format wallet address for display
+        function formatAddress(address) {
+            if (!address) return '';
+            if (address.length < 10) return address;
+            return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+        }
+        
+        // Function to update all balance displays across the page
+        function updateAllBalances() {
+            const wallet = window.cispWallet?.getCurrentWallet();
+            if (!wallet) return;
+            
+            // Get balances
+            const xCISBalance = window.blockchain?.getBalance(wallet.address, 'xCIS') || 0;
+            const CISBalance = window.blockchain?.getBalance(wallet.address, 'CIS') || 0;
+            
+            // Update all balance displays
+            const balanceElements = document.querySelectorAll('[data-token]');
+            balanceElements.forEach(element => {
+                if (element.dataset.token === 'xCIS') {
+                    element.textContent = xCISBalance.toLocaleString();
+                } else if (element.dataset.token === 'CIS') {
+                    element.textContent = CISBalance.toLocaleString();
+                }
+            });
+            
+            // Also update any specific balance displays
+            const specificXcisDisplay = document.getElementById('xcis-balance');
+            const specificCisDisplay = document.getElementById('cis-balance');
+            
+            if (specificXcisDisplay) {
+                specificXcisDisplay.textContent = xCISBalance.toLocaleString();
+            }
+            
+            if (specificCisDisplay) {
+                specificCisDisplay.textContent = CISBalance.toLocaleString();
+            }
+            
+            // Update the wallet status UI if it exists
+            const walletBalanceAmount = document.querySelector('.wallet-balance-amount');
+            if (walletBalanceAmount && walletBalanceAmount.dataset.token === 'xCIS') {
+                walletBalanceAmount.textContent = xCISBalance.toLocaleString();
+            }
+        }
+        
+        // Function to disconnect current wallet
+        async function disconnectCurrentWallet() {
+            try {
+                const wallet = window.cispWallet?.getCurrentWallet();
+                if (wallet) {
+                    await window.cispWallet.disconnectWallet(wallet.address);
+                    
+                    // Clear session data
+                    sessionStorage.removeItem('current_wallet');
+                    
+                    // Reset UI
+                    const walletContainer = document.querySelector('.wallet-container');
+                    const walletStatus = document.querySelector('.wallet-status');
+                    if (walletStatus) walletStatus.remove();
+                    
+                    document.querySelector('.wallet-form').style.display = 'block';
+                    document.querySelector('.wallet-options').style.display = 'flex';
+                    
+                    const disconnectOption = walletContainer.querySelector('.wallet-actions:last-child');
+                    if (disconnectOption) disconnectOption.remove();
+                    
+                    // Hide enter cosmos button
+                    hideCosmicEntry();
+                    
+                    window.notifications?.show('Wallet disconnected successfully', 'success');
+                }
+            } catch (error) {
+                console.error('Error disconnecting wallet:', error);
+                window.notifications?.show('Failed to disconnect wallet', 'error');
+            }
+        }
+                
+        // Global wallet state synchronization function
+        function synchronizeWalletState() {
+            try {
+                // Check if wallet system is available
+                if (!window.cispWallet) {
+                    console.log('Wallet system not available yet, will retry');
+                    return;
+                }
+                
+                // Get current wallet
+                const currentWallet = window.cispWallet.getCurrentWallet ? 
+                    window.cispWallet.getCurrentWallet() : 
+                    window.cispWallet.currentWallet;
+                
+                if (currentWallet && currentWallet.address) {
+                    // Store wallet address in session storage for cross-page access
+                    sessionStorage.setItem('current_wallet_address', currentWallet.address);
+                    sessionStorage.setItem('current_wallet_id', currentWallet.id || currentWallet.address);
+                    console.log('Wallet state synchronized:', currentWallet.address);
+                } else {
+                    // Check if we have a stored wallet that we should reconnect
+                    const storedWalletAddress = sessionStorage.getItem('current_wallet_address');
+                    if (storedWalletAddress && !currentWallet) {
+                        console.log('Attempting to reconnect stored wallet:', storedWalletAddress);
+                        
+                        // Try to reconnect the wallet
+                        if (window.cispWallet.connectWallet) {
+                            window.cispWallet.connectWallet(storedWalletAddress)
+                                .then(() => console.log('Wallet reconnected successfully'))
+                                .catch(err => console.error('Failed to reconnect wallet:', err));
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error in wallet state synchronization:', error);
+            }
+        }
+        
+        // Run synchronization on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial sync
+            setTimeout(synchronizeWalletState, 1000);
+            
+            // Set up periodic sync
+            setInterval(synchronizeWalletState, 3000);
+        });
+
+        // Function for smooth page transitions when navigating
+        function navigateTo(url) {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+        
+        // Enhanced function for entering the app
+        function enterCosmos() {
+            const wallet = window.cispWallet?.getCurrentWallet();
+            if (!wallet) {
+                window.notifications?.show('Please connect your wallet first', 'warning');
+                return;
+            }
+            
+            // Save current wallet to sessionStorage for cross-page access with more details
+            storeWalletSessionData(wallet);
+            
+            // Use smooth page transition
+            navigateTo('home.html');
+        }
+        
+        // Enhanced import wallet function
+        async function importWalletFromSeed() {
+            const seedPhrase = document.getElementById('seedPhrase').value;
+            const password = document.getElementById('importPassword').value;
+
+            if (!seedPhrase || seedPhrase.trim() === '') {
+                window.notifications?.show('Please enter a valid seed phrase', 'error');
+                return;
+            }
+            
+            if (!password || password.length < 6) {
+                window.notifications?.show('Please enter a password (min 6 characters)', 'error');
+                return;
+            }
+
+            // Show loading state
+            const importButton = document.querySelector('#wallet-import-section .action-button');
+            importButton.disabled = true;
+            importButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Importing...';
+            
+            try {
+                // Import the wallet
+                const wallet = await window.cispWallet.importWallet(seedPhrase, password);
+                
+                // Update UI
+                updateWalletStatusUI(wallet);
+                showCosmicEntry();
+                
+                // Store in session for cross-page access
+                storeWalletSessionData(wallet);
+                
+                // Show success message
+                window.notifications?.show('Wallet imported successfully!', 'success');
+                
+                // Reset import form
+                document.getElementById('seedPhrase').value = '';
+                document.getElementById('importPassword').value = '';
+                
+            } catch (error) {
+                console.error('Error importing wallet:', error);
+                window.notifications?.show('Failed to import wallet: ' + (error.message || 'Unknown error'), 'error');
+            } finally {
+                // Reset button state
+                importButton.disabled = false;
+                importButton.innerHTML = '<i class="fas fa-file-import"></i> Import Wallet';
+            }
+        }
+
+        // Function for wallet interface tabs
+        function switchWalletOption(option) {
+            const createSection = document.getElementById('wallet-create-section');
+            const importSection = document.getElementById('wallet-import-section');
+            const options = document.querySelectorAll('.wallet-option');
+            
+            options.forEach(opt => opt.classList.remove('active'));
+            
+            if (option === 'create') {
+                createSection.style.display = 'block';
+                importSection.style.display = 'none';
+                options[0].classList.add('active');
+            } else {
+                createSection.style.display = 'none';
+                importSection.style.display = 'block';
+                options[1].classList.add('active');
+            }
+        }
+
+        // Add page load event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Apply smooth page transitions
+            document.body.style.opacity = '0';
+            setTimeout(() => document.body.style.opacity = '1', 100);
+            
+            // Initialize notifications system if available
+            if (window.notifications) {
+                window.notifications.init();
+            }
+            
+            // Check if wallet is already connected
+            checkWalletOnLoad();
+            
+            // Add event listener for page visibility changes to check wallet status
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) {
+                    // When user comes back to the page, check wallet status
+                    checkWalletOnLoad();
+                }
+            });
+            
+            // Add window storage event listener for cross-tab synchronization
+            window.addEventListener('storage', (event) => {
+                if (event.key === 'current_wallet' || event.key === 'cisp_wallets') {
+                    checkWalletOnLoad();
+                }
+            });
+            
+            // Add beforeunload handler to ensure wallet state is saved
+            window.addEventListener('beforeunload', () => {
+                const wallet = window.cispWallet?.getCurrentWallet();
+                if (wallet) {
+                    storeWalletSessionData(wallet);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

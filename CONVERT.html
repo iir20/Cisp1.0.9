@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Space Protocol - Convert</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* General styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e1e2f, #4e54c8, #8f94fb);
+            background-size: 400% 400%;
+            color: #fff;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: gradientShift 15s infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 450px;
+            margin: 20px auto;
+            padding: 30px;
+            background: rgba(30, 30, 60, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .wallet-display {
+            background: rgba(30, 30, 60, 0.7);
+            color: white;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 150, 255, 0.3);
+        }
+
+        .wallet-display i {
+            color: #00ffcc;
+        }
+
+        .balance {
+            margin: 20px 0;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .balance-card {
+            background: rgba(20, 20, 40, 0.6);
+            padding: 15px;
+            border-radius: 15px;
+            width: 45%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .balance-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .balance-title {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 8px;
+        }
+
+        .balance-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ffcc;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        }
+
+        /* Input and button styling */
+        .conversion-container {
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .exchange-arrow {
+            font-size: 2rem;
+            color: #00c6ff;
+            margin: 15px 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        input[type="number"] {
+            width: 80%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 0 auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 198, 255, 0.5);
+        }
+
+        .expected-output {
+            margin: 15px 0;
+            font-size: 1rem;
+            color: #aaa;
+        }
+
+        .convert-btn {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .convert-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 114, 255, 0.6);
+        }
+
+        .convert-btn:disabled {
+            background: linear-gradient(135deg, #666, #999);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .convert-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .convert-btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* Back button */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        /* Coin animation */
+        .coin-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none;
+            z-index: 10;
+        }
+
+        .coin {
+            position: absolute;
+            top: -50px;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #ffdd00, #ffa700);
+            border-radius: 50%;
+            animation: coinFall 2s ease-in forwards;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        }
+
+        @keyframes coinFall {
+            0% { top: -50px; opacity: 1; transform: scale(1) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+            100% { top: 120%; opacity: 0; transform: scale(0.5) rotate(360deg); }
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.success { 
+            background-color: #2ecc71; 
+            border-left: 5px solid #27ae60;
+        }
+
+        .toast.error { 
+            background-color: #e74c3c; 
+            border-left: 5px solid #c0392b;
+        }
+
+        .toast.info { 
+            background-color: #3498db; 
+            border-left: 5px solid #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>xCIS Converter</h1>
+            <div class="wallet-display">
+                <i class="fas fa-wallet"></i> <span id="wallet-address">Connect wallet on home page</span>
+            </div>
+        </div>
+        
+        <div class="balance">
+            <div class="balance-card">
+                <div class="balance-title">xCIS Balance</div>
+                <div class="balance-value" id="xcis-balance">0.00</div>
+            </div>
+            <div class="balance-card">
+                <div class="balance-title">CIS Balance</div>
+                <div class="balance-value" id="cis-balance">0.00</div>
+            </div>
+        </div>
+        
+        <div class="conversion-container">
+            <input type="number" id="convert-amount" placeholder="Enter xCIS amount" min="0" step="0.01">
+            <div class="exchange-arrow">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <div class="expected-output" id="expected-output">You will receive: 0 CIS</div>
+            <button class="convert-btn" onclick="handleConvert()" disabled>Convert to CIS</button>
+        </div>
+        
+        <a href="home.html" class="back-button">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+        
+        <div class="coin-animation" id="coin-animation"></div>
+    </div>
+
+    <script src="blockchain.js"></script>
+    <script src="cisp-wallet.js"></script>
+    <script src="cosmic-effects.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update UI when page loads
+            updateConvertUI();
+            
+            // Add event listener for input change
+            document.getElementById('convert-amount').addEventListener('input', updateExpectedOutput);
+            
+            // Listen for wallet changes
+            window.addEventListener('walletChanged', function(event) {
+                updateWalletDisplay();
+                updateConvertUI();
+            });
+            
+            // Initial wallet display update
+            updateWalletDisplay();
+        });
+        
+        // Update wallet address display
+        function updateWalletDisplay() {
+            const walletAddressElement = document.getElementById('wallet-address');
+            
+            if (window.cispWallet && window.cispWallet.currentWallet) {
+                const address = window.cispWallet.currentWallet.address;
+                // Format address to show only first and last few characters
+                const formattedAddress = address.substring(0, 6) + '...' + address.substring(address.length - 4);
+                walletAddressElement.textContent = formattedAddress;
+            } else {
+                walletAddressElement.textContent = 'Connect wallet on home page';
+            }
+        }
+        
+        // Update UI based on wallet connection
+        function updateConvertUI() {
+            const isConnected = window.cispWallet && window.cispWallet.currentWallet;
+            
+            if (isConnected) {
+                const userData = getUserData();
+                
+                // Update balances
+                document.getElementById('xcis-balance').textContent = userData.balance.toFixed(2);
+                document.getElementById('cis-balance').textContent = (userData.cis || 0).toFixed(2);
+                
+                // Enable convert button
+                document.querySelector('.convert-btn').disabled = false;
+            } else {
+                // Reset balances
+                document.getElementById('xcis-balance').textContent = '0.00';
+                document.getElementById('cis-balance').textContent = '0.00';
+                
+                // Disable convert button
+                document.querySelector('.convert-btn').disabled = true;
+            }
+        }
+        
+        // Update expected output when input changes
+        function updateExpectedOutput() {
+            const amount = parseFloat(document.getElementById('convert-amount').value) || 0;
+            const conversionRate = 0.1;
+            const expectedOutput = amount * conversionRate;
+            
+            document.getElementById('expected-output').textContent = `You will receive: ${expectedOutput.toFixed(2)} CIS`;
+        }
+        
+        // Handle conversion button click
+        function handleConvert() {
+            const amount = parseFloat(document.getElementById('convert-amount').value);
+            
+            if (!amount || amount <= 0) {
+                showToast('Please enter a valid amount', 'error');
+                return;
+            }
+            
+            // Call the conversion function
+            if (typeof convertToCIS === 'function') {
+                const success = convertToCIS(amount);
+                
+                if (success) {
+                    // Clear input field
+                    document.getElementById('convert-amount').value = '';
+                    
+                    // Update expected output
+                    document.getElementById('expected-output').textContent = 'You will receive: 0 CIS';
+                    
+                    // Update UI
+                    updateConvertUI();
+                    
+                    // Show coin animation
+                    showCoinAnimation();
+                }
+            } else {
+                showToast('Conversion function not available', 'error');
+            }
+        }
+        
+        // Show coin animation effect
+        function showCoinAnimation() {
+            const animationContainer = document.getElementById('coin-animation');
+            animationContainer.style.display = 'block';
+            animationContainer.innerHTML = '';
+            
+            // Create multiple coins
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const coin = document.createElement('div');
+                    coin.className = 'coin';
+                    
+                    // Random position
+                    const randomX = Math.random() * 100;
+                    coin.style.left = `${randomX}%`;
+                    
+                    animationContainer.appendChild(coin);
+                    
+                    // Remove coin after animation completes
+                    setTimeout(() => {
+                        if (animationContainer.contains(coin)) {
+                            animationContainer.removeChild(coin);
+                        }
+                    }, 2000);
+                }, i * 100);
+            }
+            
+            // Hide animation container after all coins are done
+            setTimeout(() => {
+                animationContainer.style.display = 'none';
+            }, 3500);
+        }
+        
+        // Function to show toast notifications
+        function showToast(message, type = 'info') {
+            // Create toast element if it doesn't exist
+            let toast = document.querySelector('.toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.className = 'toast';
+                document.body.appendChild(toast);
+            }
+            
+            // Set message and type
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            
+            // Show toast
+            toast.classList.add('show');
+            
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+
+    <!-- Add our enhanced scripts -->
+    <script src="enhanced-cosmic-effects.js"></script>
+    <script src="improved-wallet-sync.js"></script>
+    <script src="global-coordination.js"></script>
+
+</body>
+</html>
